@@ -1,0 +1,19 @@
+<aside class="filters" aria-label="Filtros">
+  <h3>Filtrar</h3>
+
+  <div class="filter-group">
+    <strong>Rango de precio</strong>
+    <label>Min <input type="number" [(ngModel)]="min" placeholder="0" /></label>
+    <label>Max <input type="number" [(ngModel)]="max" placeholder="10000" /></label>
+  </div>
+
+  <div class="filter-group">
+    <strong>Condición</strong>
+    <label><input type="checkbox" (change)="toggleCond('Original', $event.target.checked)" /> Original</label>
+    <label><input type="checkbox" (change)="toggleCond('Restaurado', $event.target.checked)" /> Restaurado</label>
+  </div>
+
+  <div class="filter-group">
+    <button (click)="doApply()" class="btn">Aplicar filtros</button>
+  </div>
+</aside>

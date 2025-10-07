@@ -1,0 +1,22 @@
+<header>
+  <div class="topbar">
+    <div class="logo" aria-label="Legados Collector">
+      <div class="badge">LC</div>
+      <div>
+        <div class="brand">Legados</div>
+        <div class="tag">Collector — Reliquias y Antigüedades</div>
+      </div>
+    </div>
+
+    <div class="searchbar" role="search">
+      <input [(ngModel)]="query" placeholder="Buscar reliquias, antigüedades, colecciones..." />
+      <button (click)="buscar()">Buscar</button>
+    </div>
+
+    <div class="icons">
+      <div class="icon">Cuenta</div>
+      <div class="icon">Pedidos</div>
+      <div class="icon">Carrito <span class="cart-count">{{ cantidadCarrito }}</span></div>
+    </div>
+  </div>
+</header>

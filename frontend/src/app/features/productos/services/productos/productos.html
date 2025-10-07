@@ -1,0 +1,12 @@
+<section>
+  <div>Mostrando {{ productos.length }} artículos</div>
+
+  <div class="grid">
+    <div *ngFor="let p of productos" class="card">
+      <img [src]="p.img" [alt]="p.titulo" />
+      <div class="title">{{ p.titulo }}</div>
+      <div class="price">€{{ p.precio }}</div>
+      <button (click)="agregar(p)">Añadir</button>
+    </div>
+  </div>
+</section>
