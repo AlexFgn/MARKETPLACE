@@ -19,7 +19,7 @@
 
     <div class="grid">
       <div *ngFor="let p of mostrados" class="card">
-        <img [src]="p.img" [alt]="p.titulo">
+        <img [src]="p.img" alt="{{ p.titulo }}" class="producto-img" />
         <div class="title">{{ p.titulo }}</div>
         <div class="price">€{{ p.precio }}</div>
         <div class="price-row">
