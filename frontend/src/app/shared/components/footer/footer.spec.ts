@@ -1,23 +1,38 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
+import { Producto } from '../models/producto';
 
-import { Footer } from './footer';
+@Injectable({ providedIn: 'root' })
+export class CarritoService {
+  private items: Producto[] = [];
 
-describe('Footer', () => {
-  let component: Footer;
-  let fixture: ComponentFixture<Footer>;
+  agregar(producto: Producto) {
+    this.items.push(producto);
+  }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Footer]
-    })
-    .compileComponents();
+  getItems(): Producto[] {
+    return this.items.slice();
+  }
 
-    fixture = TestBed.createComponent(Footer);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  contar(): number {
+    return this.items.length;
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  eliminar(producto: Producto) {
+    const index = this.items.findIndex(p => {
+      const pid = (p as any).id;
+      const qid = (producto as any).id;
+      if (pid !== undefined && qid !== undefined) return pid === qid;
+      return p === producto;
+    });
+    if (index !== -1) this.items.splice(index, 1);
+    console.log('[CarritoService] eliminar uno', producto, this.items);
+  }
+
+  vaciar() {
+    this.items = [];
+  }
+
+  calcularTotal(): number {
+    return this.items.reduce((acc, it) => acc + (it.precio || 0), 0);
+  }
+}

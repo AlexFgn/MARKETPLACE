@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Muebles Antiguos · Galería</title>
+
+  <!-- Fuente (opcional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f7f4ef;
+      --card:#ffffff;
+      --muted:#6b6b6b;
+      --accent:#8b5e3c;
+      --shadow: 0 6px 18px rgba(20,20,20,0.08);
+      --radius:12px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg), #fff);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding-bottom:3rem;
+    }
+
+    /* Header */
+    header{
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      padding:1rem 1.25rem;
+      position:sticky;
+      top:0;
+      z-index:40;
+      display:flex;
+      align-items:center;
+      gap:1rem;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:.75rem;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo{
+      width:46px;height:46px;border-radius:8px;
+      background: linear-gradient(135deg,#e8d6c7,#d6c4b1);
+      display:flex;align-items:center;justify-content:center;
+      font-family:"Playfair Display", serif;
+      font-weight:700;color:#4a2f1f;
+      box-shadow: var(--shadow);
+    }
+    nav{margin-left:auto}
+    nav a{margin-left:1rem;text-decoration:none;color:var(--muted);font-weight:600}
+    nav a.cta{background:var(--accent);color:#fff;padding:.45rem .7rem;border-radius:8px}
+
+    /* Hero */
+    .hero{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:2rem;
+      align-items:center;
+      padding:2rem 1.25rem;
+      max-width:1100px;margin:0 auto;
+    }
+
+    .hero-inner{
+      display:flex;flex-direction:column;gap:1rem;
+    }
+    h1{
+      margin:0;font-family:"Playfair Display", serif;font-size:clamp(1.6rem,3vw,2.6rem);
+      color:#2b2b2b;
+    }
+    p.lead{margin:0;color:var(--muted);max-width:60ch}
+
+    /* Grid */
+    .container{max-width:1100px;margin:1rem auto;padding:0 1.25rem}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:1.25rem;
+      margin-top:1rem;
+    }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease;
+      text-decoration:none;color:inherit;
+    }
+    .card:hover{ transform:translateY(-6px); box-shadow: 0 18px 34px rgba(20,20,20,0.08); }
+    .card img{ width:100%; height:180px; object-fit:cover; display:block; }
+    .card .body{ padding:1rem; flex:1; display:flex; flex-direction:column; gap:.6rem; }
+    .title{ font-weight:600; font-size:1.02rem; }
+    .meta{ color:var(--muted); font-size:.92rem; }
+    .row{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-top:auto; }
+    .price{ font-weight:700; color:var(--accent); }
+    .btn-add{
+      background:transparent;border:1px solid rgba(0,0,0,0.08);
+      padding:.45rem .6rem;border-radius:8px;font-weight:600;
+    }
+
+    /* Modal / detalle */
+    .overlay{
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background: linear-gradient(0deg, rgba(0,0,0,0.45), rgba(0,0,0,0.45));
+      z-index:80; padding:1rem;
+    }
+    .overlay.open{ display:flex; }
+    .detalle{
+      width:100%; max-width:920px; background:#fff; border-radius:14px; overflow:hidden;
+      display:grid; grid-template-columns: 1fr 1fr; gap:0; box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+    }
+    .detalle .left{ min-height:320px; display:flex; align-items:center; justify-content:center; background:#faf7f3; }
+    .detalle img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .detalle .right{ padding:1.1rem 1.2rem; display:flex; flex-direction:column; gap:.8rem; }
+    .detalle h2{ margin:0; font-family:"Playfair Display", serif; font-size:1.45rem; color:#2b2b2b; }
+    .detalle p{ margin:0; color:var(--muted); }
+    .detalle .close{
+      margin-left:auto; background:transparent; border:none; font-weight:700; font-size:1rem; cursor:pointer;
+      color:var(--muted);
+    }
+    .detalle .actions{ margin-top:1rem; display:flex; gap:.6rem; align-items:center; }
+    .btn-primary{ background:var(--accent); color:#fff; padding:.6rem .9rem; border-radius:10px; border:none; font-weight:700; cursor:pointer; }
+    .btn-secondary{ background:transparent; border:1px solid rgba(0,0,0,0.08); padding:.55rem .8rem; border-radius:10px; cursor:pointer; }
+
+    /* Footer */
+    footer{ margin-top:2.25rem; padding:1.25rem; text-align:center; color:var(--muted); font-size:.95rem; }
+
+    /* Responsive adjustments */
+    @media (max-width:800px){
+      .detalle{ grid-template-columns: 1fr; max-height:85vh; overflow:auto; }
+      .detalle img{ height:260px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="brand" href="#">
+      <div class="logo">MA</div>
+      <div>
+        <div style="font-weight:700">Muebles Antiguos</div>
+        <div style="font-size:.85rem;color:var(--muted)">Piezas con historia</div>
+      </div>
+    </a>
+
+    <nav>
+      <a href="#coleccion">Colección</a>
+      <a href="#sobre">Sobre</a>
+      <a class="cta" href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner container">
+        <h1>Galería de muebles antiguos</h1>
+        <p class="lead">Curaduría de piezas restauradas y originales: cómodas, mesas, aparadores y lámparas con carácter. Compra en línea o solicita una visita.</p>
+      </div>
+    </section>
+
+    <section id="coleccion" class="container" aria-labelledby="coleccion-title">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+        <h2 id="coleccion-title" style="margin:0;font-family:'Playfair Display', serif;">Colección destacada</h2>
+        <div style="color:var(--muted)">Mostrando <span id="total">3</span> artículos</div>
+      </div>
+
+      <div class="grid" id="productos">
+        <!-- Card 1 -->
+        <article class="card" tabindex="0" data-id="1" data-title="Cómoda victoriana" data-price="420" data-img="https://source.unsplash.com/800x600/?antique-dresser" data-desc="Cómoda victoriana en roble macizo restaurada. 4 cajones con herrajes originales. Altura 95cm, ancho 120cm.">
+          <img src="https://source.unsplash.com/800x600/?antique-dresser" alt="Cómoda victoriana">
+          <div class="body">
+            <div class="title">Cómoda victoriana</div>
+            <div class="meta">Roble macizo · c.1890</div>
+            <div class="row">
+              <div class="price">€420</div>
+              <button class="btn-add" type="button" onclick="event.stopPropagation(); alert('Añadido al carrito (demo)');">Añadir</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card" tabindex="0" data-id="2" data-title="Mesa de roble rústica" data-price="650" data-img="https://source.unsplash.com/800x600/?antique-table" data-desc="Mesa de comedor en roble, 6 plazas. Restaurada y barnizada con técnica tradicional. Longitud 200cm.">
+          <img src="https://source.unsplash.com/800x600/?antique-table" alt="Mesa de roble rústica">
+          <div class="body">
+            <div class="title">Mesa de roble rústica</div>
+            <div class="meta">Comedor · siglo XIX</div>
+            <div class="row">
+              <div class="price">€650</div>
+              <button class="btn-add" type="button" onclick="event.stopPropagation(); alert('Añadido al carrito (demo)');">Añadir</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card" tabindex="0" data-id="3" data-title="Vitrina art déco" data-price="520" data-img="https://source.unsplash.com/800x600/?antique-cabinet" data-desc="Vitrina Art Déco con cristal curvo y detalles en nogal. Ideal para objetos de colección.">
+          <img src="https://source.unsplash.com/800x600/?antique-cabinet" alt="Vitrina art déco">
+          <div class="body">
+            <div class="title">Vitrina Art Déco</div>
+            <div class="meta">Nogal · 1920s</div>
+            <div class="row">
+              <div class="price">€520</div>
+              <button class="btn-add" type="button" onclick="event.stopPropagation(); alert('Añadido al carrito (demo)');">Añadir</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Sobre / contacto breve -->
+    <section id="sobre" class="container" style="margin-top:1.6rem;display:grid;gap:1rem;">
+      <h3 style="margin:0;font-family:'Playfair Display', serif;">Sobre nosotros</h3>
+      <p style="margin:0;color:var(--muted);max-width:70ch;">Somos restauradores especializados en mueble clásico y piezas singulares. Ofrecemos restauración, transporte y asesoría para proyectos de interiorismo.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div id="contacto">
+      <strong>Muebles Antiguos</strong> · Calle Mayor, 21 · Tel: +34 600 123 456 · <a href="mailto:info@mueblesantiguos.example">info@mueblesantiguos.example</a>
+    </div>
+    <small style="display:block;margin-top:.6rem;color:var(--muted)">© <span id="year"></span> Muebles Antiguos — Piezas restauradas con cariño</small>
+  </footer>
+
+  <!-- Modal overlay detalle -->
+  <div id="overlay" class="overlay" role="dialog" aria-hidden="true" aria-labelledby="detalle-title">
+    <div class="detalle" role="document">
+      <div class="left" id="detalle-imgwrap">
+        <img id="detalle-img" src="" alt="">
+      </div>
+      <div class="right">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <h2 id="detalle-title" style="margin:0">Título</h2>
+          <button class="close" id="cerrar" title="Cerrar">✕</button>
+        </div>
+        <p id="detalle-desc" style="color:var(--muted)"></p>
+        <div style="display:flex;gap:1rem;align-items:center;margin-top:.6rem;">
+          <div style="font-weight:800;font-size:1.12rem;color:var(--accent)" id="detalle-price">€0</div>
+          <div style="color:var(--muted)">· En stock</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn-primary" id="btn-contact">Pedir información</button>
+          <button class="btn-secondary" id="btn-cotizar">Solicitar cotización</button>
+        </div>
+
+        <div style="margin-top:1rem;color:var(--muted);font-size:.9rem;">
+          <strong>Dimensiones (aprox):</strong>  Consúltanos para medidas exactas.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Rellenar año en footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Apertura modal con los datos del card
+    const cards = document.querySelectorAll('.card');
+    const overlay = document.getElementById('overlay');
+    const detalleImg = document.getElementById('detalle-img');
+    const detalleTitle = document.getElementById('detalle-title');
+    const detalleDesc = document.getElementById('detalle-desc');
+    const detallePrice = document.getElementById('detalle-price');
+    const cerrarBtn = document.getElementById('cerrar');
+
+    function abrirDetalle(el){
+      const img = el.dataset.img;
+      const title = el.dataset.title;
+      const desc = el.dataset.desc;
+      const price = el.dataset.price;
+      detalleImg.src = img;
+      detalleImg.alt = title;
+      detalleTitle.textContent = title;
+      detalleDesc.textContent = desc;
+      detallePrice.textContent = '€' + price;
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      // focus manejo accesible
+      cerrarBtn.focus();
+    }
+
+    cards.forEach(card=>{
+      card.addEventListener('click', ()=> abrirDetalle(card));
+      card.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          abrirDetalle(card);
+        }
+      });
+    });
+
+    function cerrar(){
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+    cerrarBtn.addEventListener('click', cerrar);
+
+    // Cerrar al hacer click fuera del modal
+    overlay.addEventListener('click', (e)=>{
+      if(e.target === overlay) cerrar();
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && overlay.classList.contains('open')) cerrar();
+    });
+
+    // Botones del modal (demo)
+    document.getElementById('btn-contact').addEventListener('click', ()=>{
+      window.location.href = 'mailto:info@mueblesantiguos.example?subject=Información%20pieza';
+    });
+    document.getElementById('btn-cotizar').addEventListener('click', ()=>{
+      alert('Gracias — le enviaremos una cotización (demo).');
+    });
+
+    // Actualizar contador total si cambian dinámicamente
+    document.getElementById('total').textContent = cards.length;
+  </script>
+</body>
+</html>

@@ -10,13 +10,17 @@
 
     <div class="searchbar" role="search">
       <input [(ngModel)]="query" placeholder="Buscar reliquias, antigüedades, colecciones..." />
-      <button (click)="buscar()">Buscar</button>
+      <button type="button" (click)="buscar()">Buscar</button>
     </div>
 
     <div class="icons">
-      <div class="icon">Cuenta</div>
-      <div class="icon">Pedidos</div>
-      <div class="icon">Carrito <span class="cart-count">{{ cantidadCarrito }}</span></div>
+      <button type="button" class="icon">Cuenta</button>
+      <button type="button" class="icon">Pedidos</button>
+      <button type="button" class="icon carrito" (click)="toggleCarrito()">
+        Carrito <span class="cart-count">{{ cantidadCarrito }}</span>
+      </button>
     </div>
   </div>
+
+  <app-mini-carrito [class.visible]="mostrarMiniCarrito"></app-mini-carrito>
 </header>

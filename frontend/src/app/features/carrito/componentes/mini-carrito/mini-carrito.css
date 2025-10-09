@@ -1,0 +1,86 @@
+.mini-carrito {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  width: 320px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+:host(.visible) .mini-carrito {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mini-carrito h3 {
+  margin: 0 0 10px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.producto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.producto .info {
+  display: flex;
+  flex-direction: column;
+}
+
+.producto .titulo {
+  font-weight: 600;
+}
+
+.producto .precio {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.eliminar {
+  background: transparent;
+  border: none;
+  color: #ff4d4f;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.total {
+  margin-top: 10px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.vaciar,
+.pagar {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.vaciar {
+  background: #ddd;
+}
+
+.pagar {
+  background: #ff9900;
+  color: #fff;
+}

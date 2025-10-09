@@ -1,6 +1,28 @@
-:host{display:block}
-.filters{background:#fff;padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(16,24,40,0.04)}
-.filters h3{margin:0 0 8px 0}
-.filter-group{margin-bottom:12px}
-.filter-group label{display:block;margin:6px 0;color:#6b7280}
-.btn{display:inline-block;padding:8px 12px;border-radius:8px;border:0;background:#232f3e;color:white;cursor:pointer}
+:host { display: block; }
+
+.filters {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.04);
+}
+
+.filters h3 { margin: 0 0 8px 0; }
+
+.filter-group { margin-bottom: 12px; }
+
+.filter-group label {
+  display: block;
+  margin: 6px 0;
+  color: #6b7280;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 0;
+  background: #232f3e;
+  color: #fff;
+  cursor: pointer;
+}

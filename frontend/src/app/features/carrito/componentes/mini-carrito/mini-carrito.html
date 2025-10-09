@@ -1,0 +1,24 @@
+<div class="mini-carrito">
+  <h3>🛒 Mi Carrito</h3>
+
+  <ng-container *ngIf="productos.length > 0; else vacio">
+    <div class="producto" *ngFor="let p of productos">
+      <div class="info">
+        <span class="titulo">{{ p.titulo }}</span>
+        <span class="precio">{{ p.precio }} €</span>
+      </div>
+      <button class="eliminar" (click)="eliminar(p)">❌</button>
+    </div>
+
+    <div class="total"><strong>Total:</strong> {{ total }} €</div>
+
+    <div class="acciones">
+      <button class="vaciar" (click)="vaciar()">Vaciar</button>
+      <a href="pago.html"><button class="pagar">Pagar</button></a>
+    </div>
+  </ng-container>
+
+  <ng-template #vacio>
+    <p>Tu carrito está vacío 🕸️</p>
+  </ng-template>
+</div>

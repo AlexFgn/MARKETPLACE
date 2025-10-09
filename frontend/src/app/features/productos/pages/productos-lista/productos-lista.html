@@ -7,9 +7,10 @@
   <section style="flex:1;">
     <div class="content-top">
       <div>Mostrando {{ mostrados.length }} artículos</div>
+
       <div class="sort">
         <label for="sortSelect">Ordenar:</label>
-       <select id="sortSelect" (change)="onSortChange($event)">
+        <select id="sortSelect" (change)="onSortChange($event)">
           <option value="relevance">Relevancia</option>
           <option value="price_asc">Precio: menor a mayor</option>
           <option value="price_desc">Precio: mayor a menor</option>
@@ -19,11 +20,11 @@
 
     <div class="grid">
       <div *ngFor="let p of mostrados" class="card">
-        <img [src]="p.img" alt="{{ p.titulo }}" class="producto-img" />
+        <img class="producto-img" [src]="p.img" [alt]="p.titulo" />
         <div class="title">{{ p.titulo }}</div>
         <div class="price">€{{ p.precio }}</div>
         <div class="price-row">
-          <button class="add" (click)="agregar(p)">Añadir</button>
+          <button type="button" class="add" (click)="agregar(p)">Añadir</button>
         </div>
       </div>
     </div>

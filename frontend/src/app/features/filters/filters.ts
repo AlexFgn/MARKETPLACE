@@ -17,8 +17,7 @@ export class FiltersComponent {
   condiciones: string[] = [];
 
   toggleCond(value: string, checked: boolean) {
-    if (checked) this.condiciones.push(value);
-    else this.condiciones = this.condiciones.filter(c => c !== value);
+    this.condiciones = checked ? [...this.condiciones, value] : this.condiciones.filter(c => c !== value);
   }
 
   doApply() {

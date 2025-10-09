@@ -3,12 +3,13 @@
 
   <div class="grid">
     <div *ngFor="let p of productos" class="card">
-      <img [src]="{{p.img}}" alt="{{ p.titulo }}" class="producto-img" />
+      <img [src]="p.img" [alt]="p.titulo" class="producto-img" />
 
       <div class="title">{{ p.titulo }}</div>
       <div class="price">€{{ p.precio }}</div>
-      <button (click)="agregar(p)">Añadir</button>
+      <button type="button" class="add" (click)="agregar(p)">Añadir</button>
     </div>
   </div>
 </section>
-<router-outlet/>
+
+<router-outlet></router-outlet>

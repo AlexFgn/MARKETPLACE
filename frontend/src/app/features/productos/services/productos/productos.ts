@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
-
 export interface Producto {
   id: number;
   titulo: string;
@@ -11,9 +9,7 @@ export interface Producto {
   descripcion: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ProductosService {
   private productos: Producto[] = [
     {
@@ -61,11 +57,11 @@ export class ProductosService {
   ];
 
   getProductos(): Producto[] {
-    return [...this.productos];
+    return this.productos.slice();
   }
 
   buscar(query: string): Producto[] {
-    const q = query.toLowerCase();
+    const q = (query || '').toLowerCase();
     return this.productos.filter(p => p.titulo.toLowerCase().includes(q));
   }
 }
